@@ -67,8 +67,9 @@ for id_attachment in $(lpass export --fields="id,attachpresent"); do
             echo "making dir - +${export_path}/${full_folder_namr}+"
         fi
         # Hurrah - we have created the folder structure
-        # We are going to extract the attachment ID records based on the att-19digit-5digit format
-        for attid in $(echo "$full_record" | grep -o -E "att-[0-9]{19}-[0-9]{5}");do
+        # We are going to extract the attachment ID records based on the att-19digit-5digit format - this was using a personal account and attachment number seem randomise
+        # With the corporate version attachment numbers seem to be sequencial - so updated to logic to allow att-19digit-[1 to 5 digits]
+        for attid in $(echo "$full_record" | grep -o -E "att-[0-9]{19}-[0-9]{1,5}");do
             # although we have grepped out the specific IDs, we also need the file name too
             attachment_rec=$(echo "$full_record" | grep "$attid")
             # funcky sed to get rid of carriage return and any trailing spaces
